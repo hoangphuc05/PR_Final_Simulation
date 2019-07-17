@@ -10,6 +10,7 @@ protected:
 public:
 	CareGivers() {
 		timeLeft = -1;
+		subject = NULL;
 	}
 	void getPatient(Patient* incoming) {
 		subject = incoming;

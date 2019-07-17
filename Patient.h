@@ -10,9 +10,10 @@ private:
 	Resident *person;
 	int treatTime;
 	int priority;
+	int begin_time;//time when resident start to become patient
 
 public:
-	Patient(Resident* owner, Record * inFile) {
+	Patient(Resident* owner, Record * inFile, int time) {
 		treatTime = -1;
 		person = owner;
 		//create priority
@@ -23,6 +24,7 @@ public:
 			priority = myRandom.inRange(11, 15);
 		else
 			priority = myRandom.inRange(1, 10);
+		begin_time = time;
 		//person->addRecord(inFile);
 		//person->visit(priority);
 	}

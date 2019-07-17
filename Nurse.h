@@ -4,6 +4,7 @@
 
 extern Random myRandom;
 class Nurse : public CareGivers {
+public:
 	Nurse(): CareGivers(){}
 
 	int generateTime() {
