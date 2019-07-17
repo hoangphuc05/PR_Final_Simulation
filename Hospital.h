@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <iostream>
+#include <typeinfo>
 #include <string>
 #include "Record.h"
 #include "CareGivers.h"
@@ -64,8 +65,44 @@ public:
 			addPersonnel(new Nurse);
 	}
 
-	void startTreatment(Patient* inPatient) {
-
+	bool startTreatment(Patient* inPatient) {
+		//patient pointer will be in the doctor/nurse object
+		if (inPatient->getPriority() > 10) {
+			//loop through the vector and search for doctor
+			for (int i = 0; i < personnel.size(); i++) {
+				if (typeid(Doctor) == typeid(*personnel[i])) {
+					//check if the doctor is free?
+					if (personnel[i]->isFree()) {
+						personnel[i]->receivePatient(inPatient);
+						return true;
+					}
+				}
+			}
+		}
+		else {//both doctor and nurse can treat, prior to nurse
+			//loop through the vector and search for nurse
+			for (int i = 0; i < personnel.size(); i++) {
+				if (typeid(Nurse) == typeid(*personnel[i])) {
+					//check if the doctor is free?
+					if (personnel[i]->isFree()) {
+						personnel[i]->receivePatient(inPatient);
+						return true;
+					}
+				}
+			}
+			//no nurse available, search for doctor
+			for (int i = 0; i < personnel.size(); i++) {
+				if (typeid(Doctor) == typeid(*personnel[i])) {
+					//check if the doctor is free?
+					if (personnel[i]->isFree()) {
+						personnel[i]->receivePatient(inPatient);
+						return true;
+					}
+				}
+			}
+		}
+		//no available caregivers capable of the patient/no caregivers at all
+		return false;
 	}
 
 	void run() {
@@ -75,7 +112,13 @@ public:
 		//for loop to run a week
 		for (int clock = 0; clock < runTime; clock++) {
 			if (myRandom.next_double() < arrival_rate) {
+				//add a patient by the rate, record the arrival time
 				addPatient(village273.getSick(), clock);
+			}
+			//get the patient in the priority queue, see if any doctor/nurse can treat
+			Patient* topPatient = patients.top();
+			if (startTreatment(patients.top())) {
+				patients.pop();
 			}
 
 		}

@@ -3,11 +3,13 @@
 #include "Resident.h"
 #include "Random.h"
 
+
 extern Random myRandom;//Global variable
 
 class Patient {
 private:
 	Resident *person;
+
 	int treatTime;
 	int priority;
 	int begin_time;//time when resident start to become patient

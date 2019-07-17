@@ -5,6 +5,7 @@
 //queues/priority queue
 
 #include <iostream>
+#include <queue>
 #include "Record.h"
 #include <fstream>
 #include <string>
@@ -21,18 +22,16 @@ Random myRandom;
 int main() {
 	
 	map<string, Record*> testMap;
-
-	Village myVille;
-
-	Patient sickGuy(myVille.getSick(), new Record);
+	priority_queue<int> testIn;
+	
 	Doctor aDoc;
 	cout << "a";
 	aDoc.generateTime();
 	cout << aDoc.getRemainTime() << endl;
-
-	testMap["Phuc"] = new Record(3);
-	testMap["Phuc"]->visit(12);
-	cout << testMap["Phuc"]->at(1) << endl;
+	testIn.push(3);
+	testIn.push(5);
+	cout << testIn.top();
+	cout << testIn.top();
 	
 	
 	system("pause");

@@ -3,11 +3,12 @@
 
 extern Random myRandom;
 class Doctor :public CareGivers {
+private:
+	void generateTime() {
+		timeLeft = myRandom.inRange(1, 20);
+	}
 public:
 	Doctor() : CareGivers() {}
 
-	int generateTime() {
-		timeLeft = myRandom.inRange(1, 20);
-		return timeLeft;
-	}
+	
 };
