@@ -1,0 +1,3 @@
+﻿  Source.cpp
+  273ville.vcxproj -> D:\Whitworth\Summer2019\273ville\Debug\273ville.exe
+d:\whitworth\summer2019\273ville\caregivers.h(11): warning C26495: Variable 'CareGivers::subject' is uninitialized. Always initialize a member variable (type.6).
