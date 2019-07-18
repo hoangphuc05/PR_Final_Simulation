@@ -149,6 +149,7 @@ public:
 			for (int i = 0; i < personnel.size(); i++) {
 				if (personnel[i]->isFinished() ) {
 					//if they finish: get the arrival time and caculate the time they were in, add it to total time
+					std::cout << personnel[i]->getPatient()->getName() << " Finised with time: " << clock - personnel[i]->getPatient()->getBeginTime() << std::endl;
 					total_time += clock - personnel[i]->getPatient()->getBeginTime();
 					//add the patient back to the village as a normal person
 					village273.backHome(personnel[i]->getPatient()->getResident());
@@ -177,6 +178,8 @@ public:
 		}
 		std::cout << "time per patient: " << total_time / total_patient << std::endl;
 		std::cout << "Number of files created: " << hospitalFile.size() << std::endl;
+
+		
 		for (std::map<std::string, Record*>::iterator it = hospitalFile.begin(); it != hospitalFile.end(); it++) {
 			std::cout << it->first  // string (key)
 				<< ':'
@@ -186,6 +189,28 @@ public:
 		
 	}
 
-
+	void listAllName() {
+		std::cout << "All name of treated resident: \n";
+		for (std::map<std::string, Record*>::iterator it = hospitalFile.begin(); it != hospitalFile.end(); it++) {
+			std::cout << it->first << std::endl;		
+		}
+	}
+	void printRecord() {
+		std::string inName;
+		std::cout << "Name of the record: ";
+		std::cin >> inName;
+		if (hospitalFile.find(inName) == hospitalFile.end()) {
+			//not found
+			//create a file associate with that person
+			std::cout << "Record does not exist!\n";
+		}
+		else {
+			//found
+			for (int i = 0; i < hospitalFile[inName]->getNumber(); i++) {
+				std::cout << "Visit number: " << i + 1 << " has severity of " << hospitalFile[inName]->at(i) << std::endl;
+			}
+		}
+		
+	}
 
 };
