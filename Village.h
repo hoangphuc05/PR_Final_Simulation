@@ -44,17 +44,24 @@ public:
 			healthyVillagers.pop();
 			return sicking;
 		}
-		else {
+		else  {
 			int index = myRandom.inRange(0, normalVillagers.size() - 1);
 			Resident *sicking = normalVillagers[index];
 			normalVillagers.erase(normalVillagers.begin() + index);
 			return sicking;
 		}
+		//else//all people are sick, no more in the village
+			//return NULL;;
 	}
 
 	//get a resident back to normal
 	void backHome(Resident* person) {
 		normalVillagers.push_back(person);
+	}
+
+	//for debugging
+	int coutNormal() {
+		return normalVillagers.size();
 	}
 
 
