@@ -14,7 +14,7 @@ extern Random myRandom;
 class Village {
 private:
 
-	std::queue <Resident *> healthyVillagers;
+	//std::queue <Resident *> healthyVillagers;
 	std::vector <Resident *> normalVillagers;
 
 public:
@@ -28,7 +28,7 @@ public:
 				nameFile >> name;
 				
 
-				healthyVillagers.push(new Resident(name));
+				normalVillagers.push_back(new Resident(name));
 			}
 		}
 		else {
@@ -39,8 +39,9 @@ public:
 
 	//return a resident pointer to hospital
 	Resident* getSick() {
-		if (!healthyVillagers.empty()) {
+		/*if (!healthyVillagers.empty()) {
 			Resident *sicking = healthyVillagers.front();
+			//std::cout << sicking->getName() << " get sick\n";
 			healthyVillagers.pop();
 			return sicking;
 		}
@@ -51,16 +52,22 @@ public:
 			return sicking;
 		}
 		//else//all people are sick, no more in the village
-			//return NULL;;
+			//return NULL;;*/
+
+		if (!normalVillagers.empty()) {
+			int index = myRandom.inRange(0, normalVillagers.size() - 1);
+			return normalVillagers[index];
+		}
 	}
 
 	//get a resident back to normal
 	void backHome(Resident* person) {
 		normalVillagers.push_back(person);
+		std::cout << person->getName() << " back home\n";
 	}
 
 	bool peopleLeft() {
-		if (healthyVillagers.empty() and normalVillagers.empty())
+		if (normalVillagers.empty())
 			return false;
 		else
 			return true;
