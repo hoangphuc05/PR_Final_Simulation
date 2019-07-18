@@ -30,8 +30,14 @@ public:
 		//person->addRecord(inFile);
 		//person->visit(priority);
 	}
+	Resident *getResident() {
+		return person;
+	}
 	std::string getName() {
 		return person->getName();
+	}
+	int getBeginTime() {
+		return begin_time;
 	}
 	int getTreatTime() {
 		return treatTime;
