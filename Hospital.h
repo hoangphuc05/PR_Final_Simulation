@@ -16,15 +16,18 @@ extern Random myRandom;
 
 class Hospital {
 private:
-	int arrival_rate, doctors_count, nurse_count;
-	int runTime;
+	int runTime, doctors_count, nurse_count, total_patient;
+	double arrival_rate;
+	int total_time;
 	std::map<std::string, Record*> hospitalFile;
-	std::vector<CareGivers *> personnel;
+	std::vector<CareGivers *> personnel;//all the doctor/nurse
 	std::priority_queue<Patient *> patients;
 
 public:
 	Hospital() {
 		runTime = 10080;//minutes
+		total_time = 0;
+		total_patient = 0;
 	}
 
 	void addPersonnel(CareGivers* newPerson) {
@@ -51,7 +54,7 @@ public:
 	}
 	void input_data() {
 		std::cout << "Arrival rate (patient/hour): ";
-		int rate;
+		double rate;
 		std::cin >> rate;
 		arrival_rate = rate / 60;
 		std::cout << "Number of doctors: ";
@@ -108,21 +111,48 @@ public:
 	void run() {
 		Village village273;
 		//for debugging
+		input_data();
 		std::cout << "Hospital started!\n";
 		//for loop to run a week
 		for (int clock = 0; clock < runTime; clock++) {
+			std::cout << "Clock: " << clock << std::endl;
+			std::cout << "normal count: " << village273.coutNormal() << std::endl;
+			std::cout << "Total wait: " << total_time << std::endl;
+			//std::cout << "people in hospital queue: " << patients.size() << std::endl;
+			//std::cout << "next random:  " << myRandom.next_double() << std::endl;
+			//std::cout << "arrival rate: " << arrival_rate << std::endl;
 			if (myRandom.next_double() < arrival_rate) {
 				//add a patient by the rate, record the arrival time
 				addPatient(village273.getSick(), clock);
-			}
-			//get the patient in the priority queue, see if any doctor/nurse can treat
-			Patient* topPatient = patients.top();
-			if (startTreatment(patients.top())) {
-				patients.pop();
+				total_patient++;
 			}
 
+			//check all the doctors/nurse to see if they finished with their patient
+			for (int i = 0; i < personnel.size(); i++) {
+				if (personnel[i]->isFinished()) {
+					//if they finish: get the arrival time and caculate the time they were in, add it to total time
+					total_time += clock - personnel[i]->getPatient()->getBeginTime();
+					//add the patient back to the village as a normal person
+					village273.backHome(personnel[i]->getPatient()->getResident());
+					//the patient finished, get deleted
+					personnel[i]->releasePatient();
+				}
+			}
+			if (!patients.empty()) {
+				//get the patient in the priority queue, see if any doctor/nurse can treat
+				if (startTreatment(patients.top())) {
+					patients.pop();//if return true, remove the patient from the queue
+				}
+			}
+
+			//update the treatment time for all the personnel
+			for (int i = 0; i < personnel.size(); i++) {
+				personnel[i]->updateTime();
+			}
+
+			
 		}
-
+		std::cout << "time per patient: " << total_time / total_patient << std::endl;
 		
 	}
 
