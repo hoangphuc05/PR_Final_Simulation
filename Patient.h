@@ -29,6 +29,7 @@ public:
 		begin_time = time;
 		//person->addRecord(inFile);
 		//person->visit(priority);
+		//std::cout << owner->getName() << " is sicked with priority: " << priority << std::endl;
 	}
 	Resident *getResident() {
 		return person;

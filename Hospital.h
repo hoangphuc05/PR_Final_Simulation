@@ -26,7 +26,7 @@ private:
 
 public:
 	Hospital() {
-		runTime = 30;//minutes
+		runTime = 10800;//minutes
 		total_time = 0;
 		total_patient = 0;
 	}
@@ -90,7 +90,7 @@ public:
 					//check if the doctor is free?
 					if (personnel[i]->isFree()) {
 						personnel[i]->receivePatient(inPatient);
-						std::cout << inPatient->getName() << "is treated by Doctor with priority: " << inPatient->getPriority() << std::endl;
+						//std::cout << inPatient->getName() << "is treated by Doctor with priority: " << inPatient->getPriority() << std::endl;
 						return true;
 					}
 				}
@@ -103,7 +103,7 @@ public:
 					//check if the doctor is free?
 					if (personnel[i]->isFree()) {
 						personnel[i]->receivePatient(inPatient);
-						std::cout << inPatient->getName() << "is treated by nurse with priority: " << inPatient->getPriority() << std::endl;
+						//std::cout << inPatient->getName() << "is treated by nurse with priority: " << inPatient->getPriority() << std::endl;
 						return true;
 					}
 				}
@@ -114,7 +114,7 @@ public:
 					//check if the doctor is free?
 					if (personnel[i]->isFree()) {
 						personnel[i]->receivePatient(inPatient);
-						std::cout << inPatient->getName() << "is treated by doctor with priority: " << inPatient->getPriority() << std::endl;
+						//std::cout << inPatient->getName() << "is treated by doctor with priority: " << inPatient->getPriority() << std::endl;
 						return true;
 					}
 				}
@@ -131,9 +131,9 @@ public:
 		std::cout << "Hospital started!\n";
 		//for loop to run a week
 		for (int clock = 0; clock < runTime; clock++) {
-			std::cout << "Clock: " << clock << std::endl;
-			std::cout << "normal count: " << village273.coutNormal() << std::endl;
-			std::cout << "Total wait: " << total_time << std::endl;
+			//std::cout << "Clock: " << clock << std::endl;
+			//std::cout << "normal count: " << village273.coutNormal() << std::endl;
+			//std::cout << "Total wait: " << total_time << std::endl;
 			//std::cout << "people in hospital queue: " << patients.size() << std::endl;
 			//std::cout << "next random:  " << myRandom.next_double() << std::endl;
 			//std::cout << "arrival rate: " << arrival_rate << std::endl;
@@ -149,7 +149,7 @@ public:
 			for (int i = 0; i < personnel.size(); i++) {
 				if (personnel[i]->isFinished() ) {
 					//if they finish: get the arrival time and caculate the time they were in, add it to total time
-					std::cout << personnel[i]->getPatient()->getName() << " Finised with time: " << clock - personnel[i]->getPatient()->getBeginTime() << std::endl;
+					//std::cout << personnel[i]->getPatient()->getName() << " Finised with time: " << clock - personnel[i]->getPatient()->getBeginTime() << std::endl;
 					total_time += clock - personnel[i]->getPatient()->getBeginTime();
 					//add the patient back to the village as a normal person
 					village273.backHome(personnel[i]->getPatient()->getResident());
@@ -180,12 +180,12 @@ public:
 		std::cout << "Number of files created: " << hospitalFile.size() << std::endl;
 
 		
-		for (std::map<std::string, Record*>::iterator it = hospitalFile.begin(); it != hospitalFile.end(); it++) {
+		/*for (std::map<std::string, Record*>::iterator it = hospitalFile.begin(); it != hospitalFile.end(); it++) {
 			std::cout << it->first  // string (key)
 				<< ':'
 				<< it->second->at(0)   // string's value 
 				<< std::endl;
-		}
+		}*/
 		
 	}
 

@@ -21,7 +21,9 @@ public:
 		numberOfVisit++;
 		servereList.push_back(servere);
 	}
-
+	int getNumber() {
+		return numberOfVisit;
+	}
 	int at(int index) {
 		if (index < numberOfVisit && index > -1)
 			return servereList[index];

@@ -56,14 +56,17 @@ public:
 
 		if (!normalVillagers.empty()) {
 			int index = myRandom.inRange(0, normalVillagers.size() - 1);
-			return normalVillagers[index];
+			Resident *willSick = normalVillagers[index];
+			normalVillagers.erase(normalVillagers.begin() + index);
+			return willSick;
 		}
 	}
 
 	//get a resident back to normal
 	void backHome(Resident* person) {
+		//std::cout << person->getName() << " back home\n";
 		normalVillagers.push_back(person);
-		std::cout << person->getName() << " back home\n";
+		
 	}
 
 	bool peopleLeft() {
