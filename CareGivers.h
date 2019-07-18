@@ -24,6 +24,17 @@ public:
 	Patient* getPatient() {
 		return subject;
 	}
+	void releasePatient() {
+		delete subject;//as the person will nolonger be patient, new patient will be created from resident
+		subject = NULL;
+	}
+	bool isFinished() {
+		if (timeLeft == 0 && subject != NULL)
+			return true;
+		else
+			return false;
+	}
+
 	bool isFree() {
 		if (subject == NULL)
 			return true;
@@ -34,7 +45,8 @@ public:
 	int	getRemainTime() {
 		return timeLeft;
 	}
-	int updateTime() {
-		timeLeft--;
+	void updateTime() {
+		if (timeLeft > 0)
+			timeLeft--;
 	}
 };
