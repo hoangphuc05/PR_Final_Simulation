@@ -15,23 +15,16 @@
 #include "Resident.h"
 #include "Random.h"
 #include "Doctor.h"
+#include "Hospital.h"
 
 using namespace std;
 Random myRandom;
 
 int main() {
+	Hospital hos273;
+
+	hos273.run();
 	
-	map<string, Record*> testMap;
-	priority_queue<int> testIn;
-	
-	Doctor aDoc;
-	cout << "a";
-	aDoc.generateTime();
-	cout << aDoc.getRemainTime() << endl;
-	testIn.push(3);
-	testIn.push(5);
-	cout << testIn.top();
-	cout << testIn.top();
 	
 	
 	system("pause");
