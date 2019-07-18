@@ -59,6 +59,13 @@ public:
 		normalVillagers.push_back(person);
 	}
 
+	bool peopleLeft() {
+		if (healthyVillagers.empty() and normalVillagers.empty())
+			return false;
+		else
+			return true;
+	}
+
 	//for debugging
 	int coutNormal() {
 		return normalVillagers.size();
