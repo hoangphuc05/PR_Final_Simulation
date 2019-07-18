@@ -21,11 +21,12 @@ private:
 	int total_time;
 	std::map<std::string, Record*> hospitalFile;
 	std::vector<CareGivers *> personnel;//all the doctor/nurse
-	std::priority_queue<Patient *> patients;
+	std::priority_queue<Patient *> lowPatients;
+	std::priority_queue<Patient *> highPatients;
 
 public:
 	Hospital() {
-		runTime = 10080;//minutes
+		runTime = 120;//minutes
 		total_time = 0;
 		total_patient = 0;
 	}
@@ -49,7 +50,15 @@ public:
 		}
 
 		//person become a patient, push to the priority queue
-		patients.push(new Patient(newSick, hospitalFile[newSick->getName()], clock));
+		//create a new patient
+		Patient *newIn = new Patient(newSick, hospitalFile[newSick->getName()], clock);
+		if (newIn->getPriority() < 11) {
+			lowPatients.push(newIn);
+		}
+		else {
+			highPatients.push(newIn);
+		}
+
 
 	}
 	void input_data() {
@@ -69,6 +78,7 @@ public:
 	}
 
 	bool startTreatment(Patient* inPatient) {
+
 		//patient pointer will be in the doctor/nurse object
 		if (inPatient->getPriority() > 10) {
 			//loop through the vector and search for doctor
@@ -77,6 +87,7 @@ public:
 					//check if the doctor is free?
 					if (personnel[i]->isFree()) {
 						personnel[i]->receivePatient(inPatient);
+						std::cout << inPatient->getName() << "is treated by Doctor with priority: " << inPatient->getPriority() << std::endl;
 						return true;
 					}
 				}
@@ -89,6 +100,7 @@ public:
 					//check if the doctor is free?
 					if (personnel[i]->isFree()) {
 						personnel[i]->receivePatient(inPatient);
+						std::cout << inPatient->getName() << "is treated by nurse with priority: " << inPatient->getPriority() << std::endl;
 						return true;
 					}
 				}
@@ -99,6 +111,7 @@ public:
 					//check if the doctor is free?
 					if (personnel[i]->isFree()) {
 						personnel[i]->receivePatient(inPatient);
+						std::cout << inPatient->getName() << "is treated by doctor with priority: " << inPatient->getPriority() << std::endl;
 						return true;
 					}
 				}
@@ -123,7 +136,9 @@ public:
 			//std::cout << "arrival rate: " << arrival_rate << std::endl;
 			if (myRandom.next_double() < arrival_rate && village273.peopleLeft()) {
 				//add a patient by the rate, record the arrival time
-				addPatient(village273.getSick(), clock);
+				Resident *incomming = village273.getSick();
+
+				addPatient(incomming, clock);
 				total_patient++;
 			}
 
@@ -138,10 +153,15 @@ public:
 					personnel[i]->releasePatient();
 				}
 			}
-			if (!patients.empty()) {
+			if (!highPatients.empty()) {//check for 11-20 patient
 				//get the patient in the priority queue, see if any doctor/nurse can treat
-				if (startTreatment(patients.top())) {
-					patients.pop();//if return true, remove the patient from the queue
+				if (startTreatment(highPatients.top())) {
+					highPatients.pop();//if return true, remove the patient from the queue
+				}
+			}
+			if (!lowPatients.empty()) {//check for 1-10
+				if (startTreatment(lowPatients.top())) {
+					lowPatients.pop();
 				}
 			}
 
@@ -150,9 +170,16 @@ public:
 				personnel[i]->updateTime();
 			}
 
-			
+			std::cout << std::endl;
 		}
 		std::cout << "time per patient: " << total_time / total_patient << std::endl;
+		std::cout << "Number of files created: " << hospitalFile.size() << std::endl;
+		for (std::map<std::string, Record*>::iterator it = hospitalFile.begin(); it != hospitalFile.end(); it++) {
+			std::cout << it->first  // string (key)
+				<< ':'
+				<< it->second->at(0)   // string's value 
+				<< std::endl;
+		}
 		
 	}
 
