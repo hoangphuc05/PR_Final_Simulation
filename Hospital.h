@@ -26,7 +26,7 @@ private:
 
 public:
 	Hospital() {
-		runTime = 10800;//minutes
+		runTime = 30;//minutes
 		total_time = 0;
 		total_patient = 0;
 	}
@@ -131,7 +131,7 @@ public:
 		std::cout << "Hospital started!\n";
 		//for loop to run a week
 		for (int clock = 0; clock < runTime; clock++) {
-			//std::cout << "Clock: " << clock << std::endl;
+			std::cout << "Clock: " << clock << std::endl;
 			//std::cout << "normal count: " << village273.coutNormal() << std::endl;
 			//std::cout << "Total wait: " << total_time << std::endl;
 			//std::cout << "people in hospital queue: " << patients.size() << std::endl;
@@ -149,7 +149,7 @@ public:
 			for (int i = 0; i < personnel.size(); i++) {
 				if (personnel[i]->isFinished() ) {
 					//if they finish: get the arrival time and caculate the time they were in, add it to total time
-					//std::cout << personnel[i]->getPatient()->getName() << " Finised with time: " << clock - personnel[i]->getPatient()->getBeginTime() << std::endl;
+					std::cout << personnel[i]->getPatient()->getName() << " Finised with time: " << clock - personnel[i]->getPatient()->getBeginTime() << std::endl;
 					total_time += clock - personnel[i]->getPatient()->getBeginTime();
 					//add the patient back to the village as a normal person
 					village273.backHome(personnel[i]->getPatient()->getResident());
@@ -174,7 +174,7 @@ public:
 				personnel[i]->updateTime();
 			}
 
-			std::cout << std::endl;
+			//std::cout << std::endl;
 		}
 		std::cout << "time per patient: " << total_time / total_patient << std::endl;
 		std::cout << "Number of files created: " << hospitalFile.size() << std::endl;
