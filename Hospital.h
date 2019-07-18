@@ -121,7 +121,7 @@ public:
 			//std::cout << "people in hospital queue: " << patients.size() << std::endl;
 			//std::cout << "next random:  " << myRandom.next_double() << std::endl;
 			//std::cout << "arrival rate: " << arrival_rate << std::endl;
-			if (myRandom.next_double() < arrival_rate) {
+			if (myRandom.next_double() < arrival_rate && village273.peopleLeft()) {
 				//add a patient by the rate, record the arrival time
 				addPatient(village273.getSick(), clock);
 				total_patient++;
@@ -129,7 +129,7 @@ public:
 
 			//check all the doctors/nurse to see if they finished with their patient
 			for (int i = 0; i < personnel.size(); i++) {
-				if (personnel[i]->isFinished()) {
+				if (personnel[i]->isFinished() ) {
 					//if they finish: get the arrival time and caculate the time they were in, add it to total time
 					total_time += clock - personnel[i]->getPatient()->getBeginTime();
 					//add the patient back to the village as a normal person
