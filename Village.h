@@ -60,6 +60,7 @@ public:
 			normalVillagers.erase(normalVillagers.begin() + index);
 			return willSick;
 		}
+		return NULL;
 	}
 
 	//get a resident back to normal
