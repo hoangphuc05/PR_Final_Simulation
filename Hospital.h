@@ -26,7 +26,7 @@ private:
 
 public:
 	Hospital() {
-		runTime = 120;//minutes
+		runTime = 30;//minutes
 		total_time = 0;
 		total_patient = 0;
 	}
@@ -52,6 +52,9 @@ public:
 		//person become a patient, push to the priority queue
 		//create a new patient
 		Patient *newIn = new Patient(newSick, hospitalFile[newSick->getName()], clock);
+		//add a visit to the pation/resident record
+		hospitalFile[newIn->getName()]->visit(newIn->getPriority());
+
 		if (newIn->getPriority() < 11) {
 			lowPatients.push(newIn);
 		}
