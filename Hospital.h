@@ -172,7 +172,7 @@ public:
 
 			//std::cout << std::endl;
 		}
-		std::cout << "Average visit time of patient: " << total_time / total_patient << std::endl;
+		std::cout << "Average visit time of patient: " << total_time / total_patient << " minutes." <<std::endl;
 		//std::cout << "Number of files created: " << hospitalFile.size() << std::endl;
 		
 		
