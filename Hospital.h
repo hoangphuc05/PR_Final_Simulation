@@ -18,11 +18,11 @@ class Hospital {
 private:
 	int runTime, doctors_count, nurse_count, total_patient;
 	double arrival_rate;
-	int total_time;
-	std::map<std::string, Record*> hospitalFile;
+	int total_time;//total time of all patient
+	std::map<std::string, Record*> hospitalFile;//map the record with the name of all resident
 	std::vector<CareGivers *> personnel;//all the doctor/nurse
-	std::priority_queue<Patient *> lowPatients;
-	std::priority_queue<Patient *> highPatients;
+	std::priority_queue<Patient *> lowPatients;//patient with priority from 1-10
+	std::priority_queue<Patient *> highPatients;//from 11-20
 
 public:
 	Hospital() {
@@ -55,6 +55,7 @@ public:
 		//add a visit to the pation/resident record
 		hospitalFile[newIn->getName()]->visit(newIn->getPriority());
 
+		//add patient to according to their severity
 		if (newIn->getPriority() < 11) {
 			lowPatients.push(newIn);
 		}
@@ -74,15 +75,16 @@ public:
 		std::cout << "Number of Nurses: ";
 		std::cin >> nurse_count;
 
+		//add number of doctors/nurses
 		for (int i = 0; i < doctors_count; i++)
 			addPersonnel(new Doctor);
 		for (int i = 0; i < nurse_count; i++)
 			addPersonnel(new Nurse);
 	}
-	//for plotting purpose
-	
-	bool startTreatment(Patient* inPatient) {
 
+	
+	//check if a patient can be treated by the doctor in the current hospital
+	bool startTreatment(Patient* inPatient) {
 		//patient pointer will be in the doctor/nurse object
 		if (inPatient->getPriority() > 10) {
 			//loop through the vector and search for doctor
@@ -122,13 +124,15 @@ public:
 		return false;
 	}
 
+	//initiate and run the hospital
 	void run() {
 		
 		Village village273;
+
 		//prompt user for input data: arrival rate, number of doctors and nurses
 		input_data();
 
-		std::cout << "Hospital started!\n";
+		std::cout << "Hospital started!\n\n";
 		//for loop to run a week
 		for (int clock = 0; clock < runTime; clock++) {
 			if (myRandom.next_double() < arrival_rate && village273.peopleLeft()) {
@@ -174,11 +178,12 @@ public:
 		
 	}
 
+	//list all name, with 4 names in the same line
 	void listAllName() {
 		std::cout << "All name of treated resident: \n";
 		int count = 0;
 		for (std::map<std::string, Record*>::iterator it = hospitalFile.begin(); it != hospitalFile.end(); it++) {
-			std::cout << it->first;
+			std::cout << it->first;//print the name only
 			if (count == 5) {
 				std::cout << std::endl;
 				count = 0;
@@ -189,13 +194,14 @@ public:
 			}
 		}
 	}
+
+	//print the record according to the name
 	void printRecord() {
 		std::string inName;
 		std::cout << "Name of the record: ";
 		std::cin >> inName;
 		if (hospitalFile.find(inName) == hospitalFile.end()) {
 			//not found
-			//create a file associate with that person
 			std::cout << "Record does not exist!\n";
 		}
 		else {
