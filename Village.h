@@ -39,23 +39,10 @@ public:
 
 	//return a resident pointer to hospital
 	Resident* getSick() {
-		/*if (!healthyVillagers.empty()) {
-			Resident *sicking = healthyVillagers.front();
-			//std::cout << sicking->getName() << " get sick\n";
-			healthyVillagers.pop();
-			return sicking;
-		}
-		else  {
-			int index = myRandom.inRange(0, normalVillagers.size() - 1);
-			Resident *sicking = normalVillagers[index];
-			normalVillagers.erase(normalVillagers.begin() + index);
-			return sicking;
-		}
-		//else//all people are sick, no more in the village
-			//return NULL;;*/
+		
 
 		if (!normalVillagers.empty()) {
-			int index = myRandom.inRange(0, normalVillagers.size() - 1);
+			int index = myRandom.inRange(0, normalVillagers.size() - 2);
 			Resident *willSick = normalVillagers[index];
 			normalVillagers.erase(normalVillagers.begin() + index);
 			return willSick;

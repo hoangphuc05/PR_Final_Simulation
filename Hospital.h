@@ -26,7 +26,7 @@ private:
 
 public:
 	Hospital() {
-		runTime = 30;//minutes
+		runTime = 10080;//minutes = 1 week
 		total_time = 0;
 		total_patient = 0;
 	}
@@ -46,7 +46,7 @@ public:
 		}
 		else {
 			//found
-			//do nothing?
+			//do nothing
 		}
 
 		//person become a patient, push to the priority queue
@@ -79,7 +79,8 @@ public:
 		for (int i = 0; i < nurse_count; i++)
 			addPersonnel(new Nurse);
 	}
-
+	//for plotting purpose
+	
 	bool startTreatment(Patient* inPatient) {
 
 		//patient pointer will be in the doctor/nurse object
@@ -90,7 +91,6 @@ public:
 					//check if the doctor is free?
 					if (personnel[i]->isFree()) {
 						personnel[i]->receivePatient(inPatient);
-						//std::cout << inPatient->getName() << "is treated by Doctor with priority: " << inPatient->getPriority() << std::endl;
 						return true;
 					}
 				}
@@ -103,7 +103,6 @@ public:
 					//check if the doctor is free?
 					if (personnel[i]->isFree()) {
 						personnel[i]->receivePatient(inPatient);
-						//std::cout << inPatient->getName() << "is treated by nurse with priority: " << inPatient->getPriority() << std::endl;
 						return true;
 					}
 				}
@@ -114,7 +113,6 @@ public:
 					//check if the doctor is free?
 					if (personnel[i]->isFree()) {
 						personnel[i]->receivePatient(inPatient);
-						//std::cout << inPatient->getName() << "is treated by doctor with priority: " << inPatient->getPriority() << std::endl;
 						return true;
 					}
 				}
@@ -125,31 +123,25 @@ public:
 	}
 
 	void run() {
+		
 		Village village273;
-		//for debugging
+		//prompt user for input data: arrival rate, number of doctors and nurses
 		input_data();
+
 		std::cout << "Hospital started!\n";
 		//for loop to run a week
 		for (int clock = 0; clock < runTime; clock++) {
-			std::cout << "Clock: " << clock << std::endl;
-			//std::cout << "normal count: " << village273.coutNormal() << std::endl;
-			//std::cout << "Total wait: " << total_time << std::endl;
-			//std::cout << "people in hospital queue: " << patients.size() << std::endl;
-			//std::cout << "next random:  " << myRandom.next_double() << std::endl;
-			//std::cout << "arrival rate: " << arrival_rate << std::endl;
 			if (myRandom.next_double() < arrival_rate && village273.peopleLeft()) {
 				//add a patient by the rate, record the arrival time
 				Resident *incomming = village273.getSick();
-
 				addPatient(incomming, clock);
-				total_patient++;
 			}
 
 			//check all the doctors/nurse to see if they finished with their patient
 			for (int i = 0; i < personnel.size(); i++) {
-				if (personnel[i]->isFinished() ) {
+				if (personnel[i]->isFinished()) {
 					//if they finish: get the arrival time and caculate the time they were in, add it to total time
-					std::cout << personnel[i]->getPatient()->getName() << " Finised with time: " << clock - personnel[i]->getPatient()->getBeginTime() << std::endl;
+					total_patient++;
 					total_time += clock - personnel[i]->getPatient()->getBeginTime();
 					//add the patient back to the village as a normal person
 					village273.backHome(personnel[i]->getPatient()->getResident());
@@ -176,23 +168,25 @@ public:
 
 			//std::cout << std::endl;
 		}
-		std::cout << "time per patient: " << total_time / total_patient << std::endl;
-		std::cout << "Number of files created: " << hospitalFile.size() << std::endl;
-
+		std::cout << "Average visit time of patient: " << total_time / total_patient << std::endl;
+		//std::cout << "Number of files created: " << hospitalFile.size() << std::endl;
 		
-		/*for (std::map<std::string, Record*>::iterator it = hospitalFile.begin(); it != hospitalFile.end(); it++) {
-			std::cout << it->first  // string (key)
-				<< ':'
-				<< it->second->at(0)   // string's value 
-				<< std::endl;
-		}*/
 		
 	}
 
 	void listAllName() {
 		std::cout << "All name of treated resident: \n";
+		int count = 0;
 		for (std::map<std::string, Record*>::iterator it = hospitalFile.begin(); it != hospitalFile.end(); it++) {
-			std::cout << it->first << std::endl;		
+			std::cout << it->first;
+			if (count == 5) {
+				std::cout << std::endl;
+				count = 0;
+			}
+			else {
+				count++;
+				std::cout << "\t\t";
+			}
 		}
 	}
 	void printRecord() {

@@ -15,7 +15,6 @@ public:
 		timeLeft = -1;
 		subject = NULL;
 	}
-	
 
 	void receivePatient(Patient* incoming) {
 		subject = incoming;

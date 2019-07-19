@@ -27,9 +27,7 @@ public:
 		else
 			priority = myRandom.inRange(1, 10);
 		begin_time = time;
-		//person->addRecord(inFile);
-		//person->visit(priority);
-		std::cout << owner->getName() << " is sicked with priority: " << priority << std::endl;
+		
 	}
 	Resident *getResident() {
 		return person;
@@ -62,7 +60,5 @@ public:
 			return false;
 	}
 
-	//Record *getRecord() {
-		//return person->getRecord();
-	//}
+	
 };

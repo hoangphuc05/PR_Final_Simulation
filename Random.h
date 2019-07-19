@@ -1,5 +1,5 @@
 //#pragma once
-
+//taken from the airport simulator project
 #ifndef RANDOM_H_
 #define RANDOM_H_
 

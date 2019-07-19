@@ -23,9 +23,11 @@ Random myRandom;
 
 int main() {
 	std::cout << "Welcome to simulation" << std::endl;
+	
 	Hospital hos273;
 
 	hos273.run();
+	
 	
 	char choice;
 	do {
@@ -50,7 +52,7 @@ int main() {
 			return 0;
 		}
 
-		cout << "Do you wish to perform another transaction? (y or n): ";
+		cout << "\nDo you want to make make another task? (y or n): ";
 		cin >> choice;
 	} while (choice != 'n');
 
