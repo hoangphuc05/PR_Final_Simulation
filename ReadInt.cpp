@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <limits>
 
 /**
 	Function for reading a value within the range [low, high]
